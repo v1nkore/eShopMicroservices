@@ -16,6 +16,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{1A902706-91A2-4B0F-B66A-672373B28148}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{90FB92CA-F469-44E0-82D3-22FFBCDB6242}"
+	ProjectSection(SolutionItems) = preProject
+		MongoDbDockerCommands.txt = MongoDbDockerCommands.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount", "Discount", "{9FFCFF6C-BE1B-438D-A8B9-0AB65FD84C28}"
 EndProject
@@ -34,17 +37,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.API", "src\Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.API", "src\Services\Ordering\Ordering.API\Ordering.API.csproj", "{E34DA0A6-86C9-4978-A6FB-7E6EE80353A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Domain", "src\Services\Ordering\Ordering.Domain\Ordering.Domain.csproj", "{3CFB64ED-2567-4C64-9C06-0B687E103557}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Domain", "src\Services\Ordering\Ordering.Domain\Ordering.Domain.csproj", "{3CFB64ED-2567-4C64-9C06-0B687E103557}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Application", "src\Services\Ordering\Ordering.Application\Ordering.Application.csproj", "{36B196C4-C312-4EF6-8D25-31E8A0904DE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Application", "src\Services\Ordering\Ordering.Application\Ordering.Application.csproj", "{36B196C4-C312-4EF6-8D25-31E8A0904DE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Infrastructure", "src\Services\Ordering\Ordering.Infrastructure\Ordering.Infrastructure.csproj", "{42C03BB6-B55A-4FD2-B9F3-428B57C824B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Infrastructure", "src\Services\Ordering\Ordering.Infrastructure\Ordering.Infrastructure.csproj", "{42C03BB6-B55A-4FD2-B9F3-428B57C824B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.UnitTests", "src\Services\Basket\Basket.UnitTests\Basket.UnitTests.csproj", "{FBBD25B0-2BB7-4B14-871F-272C3C08B1E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.UnitTests", "src\Services\Basket\Basket.UnitTests\Basket.UnitTests.csproj", "{FBBD25B0-2BB7-4B14-871F-272C3C08B1E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.UnitTests", "src\Services\Catalog\Catalog.UnitTests\Catalog.UnitTests.csproj", "{1B6E3046-7C4E-4EF5-A888-9D561C3420E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.UnitTests", "src\Services\Catalog\Catalog.UnitTests\Catalog.UnitTests.csproj", "{1B6E3046-7C4E-4EF5-A888-9D561C3420E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.UnitTests", "src\Services\Discount\Discount.UnitTests\Discount.UnitTests.csproj", "{6D5322D1-6795-4929-AD6B-B7710AAD2F89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.UnitTests", "src\Services\Discount\Discount.UnitTests\Discount.UnitTests.csproj", "{6D5322D1-6795-4929-AD6B-B7710AAD2F89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
