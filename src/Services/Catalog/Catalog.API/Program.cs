@@ -7,12 +7,8 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton<IMongoDbOptions, MongoDbOptions>();
 
-builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection(MongoDbOptions.Section));
-
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ICatalogContext, CatalogContext>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -23,6 +19,13 @@ builder.Services.AddHealthChecks()
 		builder.Configuration.GetValue<string>($"{MongoDbOptions.Section}:ConnectionString"),
 		"MongoDb Health",
 		HealthStatus.Degraded);
+
+builder.Services.AddSingleton<IMongoDbOptions, MongoDbOptions>();
+
+builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection(MongoDbOptions.Section));
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICatalogContext, CatalogContext>();
 
 var app = builder.Build();
 

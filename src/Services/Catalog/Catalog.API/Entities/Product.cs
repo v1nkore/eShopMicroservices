@@ -1,13 +1,8 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
-namespace Catalog.API.Entities
+﻿namespace Catalog.API.Entities
 {
-	public sealed class Product
+	public class Product
 	{
-		[BsonId]
-		[BsonRepresentation(BsonType.ObjectId)]
-		public string Id { get; set; } = null!;
+		public System.Guid Id { get; set; }
 
 		public string? Name { get; set; }
 		public string? Category { get; set; }
