@@ -7,13 +7,25 @@ namespace Catalog.API.Data
 {
 	public sealed class CatalogContext : ICatalogContext
 	{
+		private readonly IMongoClient _client;
+		private readonly IMongoDatabase _database;
+
 		public IMongoCollection<Product> Products { get; }
 
-		public CatalogContext(IOptions<MongoDbOptions> mongoDbSettings)
+		public CatalogContext(IOptions<MongoDbOptions> options)
 		{
-			var client = new MongoClient(mongoDbSettings.Value.ConnectionString);
-			var database = client.GetDatabase(mongoDbSettings.Value.DatabaseName);
-			Products = database.GetCollection<Product>(mongoDbSettings.Value.CollectionName);
+			_client = new MongoClient(options.Value.ConnectionString);
+			_database = _client.GetDatabase(options.Value.DatabaseName);
+		}
+
+		public IMongoCollection<T> GetCollection<T>(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+			{
+				return null!;
+			}
+
+			return _database.GetCollection<T>(name);
 		}
 	}
 }

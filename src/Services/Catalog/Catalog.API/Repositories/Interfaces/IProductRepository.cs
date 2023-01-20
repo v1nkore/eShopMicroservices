@@ -4,7 +4,7 @@ namespace Catalog.API.Repositories.Interfaces
 {
 	public interface IProductRepository
 	{
-		Task<List<ProductResponse>> GetProductsAsync();
+		Task<IEnumerable<ProductResponse>> GetProductsAsync();
 		Task<ProductResponse> GetProductAsync(string id);
 		Task<IEnumerable<ProductResponse>> GetProductsByNameAsync(string name);
 		Task<IEnumerable<ProductResponse>> GetProductByCategoryAsync(string category);
