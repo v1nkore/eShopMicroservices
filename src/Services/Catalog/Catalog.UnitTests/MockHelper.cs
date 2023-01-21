@@ -19,5 +19,13 @@ namespace Catalog.UnitTests
 			DatabaseName = "testDb",
 			CollectionName = "testCollection",
 		};
+
+		public static void VerifyFindAsyncCall<T>(this Mock<IMongoCollection<T>> collectionMock)
+		{
+			collectionMock.Verify(v => v.FindAsync(
+				It.IsAny<FilterDefinition<T>>(),
+				It.IsAny<FindOptions<T>>(),
+				It.IsAny<CancellationToken>()), Times.Once);
+		}
 	}
 }

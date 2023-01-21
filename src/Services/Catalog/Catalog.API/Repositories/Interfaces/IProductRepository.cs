@@ -10,7 +10,7 @@ namespace Catalog.API.Repositories.Interfaces
 		Task<IEnumerable<ProductResponse>> GetProductByCategoryAsync(string category);
 
 		Task<string> CreateProductAsync(ProductCommand product);
-		Task<bool> UpdateProductAsync(ProductCommand product);
+		Task<bool> ReplaceProductAsync(ProductCommand product);
 		Task<bool> DeleteProductAsync(string id);
 	}
 }

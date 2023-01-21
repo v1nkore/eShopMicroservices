@@ -70,5 +70,25 @@ namespace Catalog.UnitTests
 		{
 			return GetMappedProducts().First();
 		}
+
+		public static ProductCommand GetOneProductCommand()
+		{
+			return new ProductCommand()
+			{
+				Name = "Product command name",
+				Category = "Product command category",
+				Price = 2000M,
+			};
+		}
+
+		public static Product GetOneMappedProductCommand()
+		{
+			return new Product()
+			{
+				Name = "Product command name",
+				Category = "Product command category",
+				Price = 2000M,
+			};
+		}
 	}
 }

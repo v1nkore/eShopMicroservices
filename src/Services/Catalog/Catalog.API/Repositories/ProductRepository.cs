@@ -53,7 +53,6 @@ namespace Catalog.API.Repositories
 				.Result.ToListAsync();
 
 			return _mapper.Map<List<Product>, List<ProductResponse>>(products);
-
 		}
 
 		public async Task<string> CreateProductAsync(ProductCommand product)
@@ -64,12 +63,12 @@ namespace Catalog.API.Repositories
 			return GuidConverter.Encode(mapped.Id);
 		}
 
-		public async Task<bool> UpdateProductAsync(ProductCommand product)
+		public async Task<bool> ReplaceProductAsync(ProductCommand product)
 		{
 			var mapped = _mapper.Map<ProductCommand, Product>(product);
-			var updateResult = await _context.GetCollection<Product>(nameof(Product)).ReplaceOneAsync(p => p.Id == mapped.Id, mapped);
+			var replaceResult = await _context.GetCollection<Product>(nameof(Product)).ReplaceOneAsync(p => p.Id == mapped.Id, mapped);
 
-			return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
+			return replaceResult.IsAcknowledged && replaceResult.ModifiedCount > 0;
 		}
 
 		public async Task<bool> DeleteProductAsync(string id)
