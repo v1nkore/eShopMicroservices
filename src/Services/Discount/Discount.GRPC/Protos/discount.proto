@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+service DiscountProtoService {
+	rpc GetDiscountAsync (GetDiscountRequest) returns (CouponResponse);
+	rpc CreateDiscountAsync (CreateDiscountCommand) returns (DiscountCommandResponse);
+	rpc UpdateDiscountAsync (UpdateDiscountCommand) returns (DiscountCommandResponse);
+	rpc DeleteDiscountAsync (DeleteDiscountCommand) returns (DiscountCommandResponse);
+}
+
+message GetDiscountRequest {
+	string productName = 1;
+}
+
+message CouponResponse {
+	int32 Id = 1;
+	string ProductName;
+	string Description;
+	int32 Amount;
+}
+
+message DiscountCommand {
+	google.protobuf.Int32Value Id = 1;
+	string ProductName = 2;
+	string Description = 3;
+	int32 Amount = 4;
+}
+
+message DiscountCommandResponse {
+	bool success = 1;
+}
+
+message CreateDiscountCommand {
+	DiscountCommand command = 1;
+}
+
+message UpdateDiscountCommand {
+	DiscountCommand command = 1;
+}
+
+message DeleteDiscountCommand {
+	string productName = 1;
+}

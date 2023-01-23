@@ -20,9 +20,9 @@ builder.Services.AddHealthChecks()
 		"MongoDb Health",
 		HealthStatus.Degraded);
 
-builder.Services.AddSingleton<IMongoDbOptions, MongoDbOptions>();
 
 builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection(MongoDbOptions.Section));
+builder.Services.AddSingleton<IMongoDbOptions, MongoDbOptions>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICatalogContext, CatalogContext>();
@@ -31,6 +31,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+	app.UseDeveloperExceptionPage();
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }

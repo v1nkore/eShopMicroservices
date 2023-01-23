@@ -68,7 +68,7 @@ namespace Catalog.API.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> UpdateAsync([FromBody] ProductCommand product)
 		{
-			var result = await _productRepository.UpdateProductAsync(product);
+			var result = await _productRepository.ReplaceProductAsync(product);
 
 			return result ? Ok(result) : BadRequest(product);
 		}
