@@ -1,6 +1,5 @@
 using Dapper;
 using Discount.GRPC.Data;
-using Discount.GRPC.DTO;
 using Discount.GRPC.Entities;
 using Discount.GRPC.Repositories.Interfaces;
 using Microsoft.Extensions.Options;
@@ -32,7 +31,7 @@ public class DiscountRepository : IDiscountRepository
 		}
 	}
 
-	public async Task<bool> CreateDiscountAsync(CouponCommand coupon)
+	public async Task<bool> CreateDiscountAsync(Coupon coupon)
 	{
 		await using (var connection = new NpgsqlConnection(_options.Value.ConnectionString))
 		{
@@ -44,7 +43,7 @@ public class DiscountRepository : IDiscountRepository
 		}
 	}
 
-	public async Task<bool> UpdateDiscountAsync(CouponCommand coupon)
+	public async Task<bool> UpdateDiscountAsync(Coupon coupon)
 	{
 		await using (var connection = new NpgsqlConnection(_options.Value.ConnectionString))
 		{

@@ -15,9 +15,9 @@ message GetDiscountRequest {
 
 message CouponResponse {
 	int32 Id = 1;
-	string ProductName;
-	string Description;
-	int32 Amount;
+	string ProductName = 2;
+	string Description = 3;
+	int32 Amount = 4;
 }
 
 message DiscountCommand {
