@@ -2,15 +2,33 @@ syntax = "proto3";
 
 import "google/protobuf/wrappers.proto";
 
-service DiscountProtoService {
-	rpc GetDiscountAsync (GetDiscountRequest) returns (CouponResponse);
-	rpc CreateDiscountAsync (CreateDiscountCommand) returns (DiscountCommandResponse);
-	rpc UpdateDiscountAsync (UpdateDiscountCommand) returns (DiscountCommandResponse);
-	rpc DeleteDiscountAsync (DeleteDiscountCommand) returns (DiscountCommandResponse);
+service DiscountProto {
+	rpc GetDiscount (GetDiscountRequest) returns (CouponResponse);
+	rpc CreateDiscount (CreateDiscountCommand) returns (DiscountCommandResponse);
+	rpc UpdateDiscount (UpdateDiscountCommand) returns (DiscountCommandResponse);
+	rpc DeleteDiscount (DeleteDiscountCommand) returns (DiscountCommandResponse);
 }
 
 message GetDiscountRequest {
-	string productName = 1;
+	string ProductName = 1;
+}
+
+message CreateDiscountCommand {
+	google.protobuf.Int32Value Id = 1;
+	string ProductName = 2;
+	string Description = 3;
+	int32 Amount = 4;
+}
+
+message UpdateDiscountCommand {
+	int32 Id = 1;
+	string ProductName = 2;
+	string Description = 3;
+	int32 Amount = 4;
+}
+
+message DeleteDiscountCommand {
+	string ProductName = 1;
 }
 
 message CouponResponse {
@@ -20,25 +38,6 @@ message CouponResponse {
 	int32 Amount = 4;
 }
 
-message DiscountCommand {
-	google.protobuf.Int32Value Id = 1;
-	string ProductName = 2;
-	string Description = 3;
-	int32 Amount = 4;
-}
-
 message DiscountCommandResponse {
-	bool success = 1;
-}
-
-message CreateDiscountCommand {
-	DiscountCommand command = 1;
-}
-
-message UpdateDiscountCommand {
-	DiscountCommand command = 1;
-}
-
-message DeleteDiscountCommand {
-	string productName = 1;
+	bool Success = 1;
 }

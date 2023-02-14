@@ -9,12 +9,13 @@ namespace Discount.GRPC.Repositories;
 
 public class DiscountRepository : IDiscountRepository
 {
-	private readonly IOptions<INpgsqlOptions> _options;
+	private readonly IOptions<NpgsqlOptions> _options;
 
-	public DiscountRepository(IOptions<INpgsqlOptions> options)
+	public DiscountRepository(IOptions<NpgsqlOptions> options)
 	{
 		_options = options;
 	}
+
 	public async Task<Coupon> GetDiscountAsync(string productName)
 	{
 		await using (var connection = new NpgsqlConnection(_options.Value.ConnectionString))
@@ -36,8 +37,8 @@ public class DiscountRepository : IDiscountRepository
 		await using (var connection = new NpgsqlConnection(_options.Value.ConnectionString))
 		{
 			var affected = await connection.ExecuteAsync
-				("INSERT INTO Coupon (ProductName, Description, Amount) VALUES (@ProductName, @Description, @Amount)",
-					new { coupon.ProductName, coupon.Description, coupon.Amount });
+			("INSERT INTO Coupon (ProductName, Description, Amount) VALUES (@ProductName, @Description, @Amount)",
+				new { coupon.ProductName, coupon.Description, coupon.Amount });
 
 			return affected == 0;
 		}

@@ -5,7 +5,7 @@ using Polly;
 
 namespace Discount.GRPC.Extensions;
 
-public static class HostExtensions
+public static class ServiceProviderExtensions
 {
 	public static async Task MigrateDatabaseAsync<TContext>(this IServiceProvider serviceProvider)
 	{
@@ -46,20 +46,20 @@ public static class HostExtensions
 				command.CommandText = "DROP TABLE IF EXISTS Coupon";
 				await command.ExecuteNonQueryAsync();
 
-				command.CommandText = @"CREATE TABLE COUPON(Id SERIAL PRIMARY KEY),
+				command.CommandText = @"CREATE TABLE Coupon(Id SERIAL PRIMARY KEY,
 											ProductName VARCHAR(40) NOT NULL,
 											Description TEXT,
-											Amount INT";
+											Amount INT);";
 				await command.ExecuteNonQueryAsync();
 
-				command.CommandText = "INSERT INTO Coupon " +
-									  "(ProductName, Description, Amount) " +
-									  "VALUES('MacBook Air 13', 'MacBook Air Discount', '200');";
+				command.CommandText = @"INSERT INTO Coupon 
+											(ProductName, Description, Amount) 
+											VALUES('MacBook Air 13', 'MacBook Air Discount', '200');";
 				await command.ExecuteNonQueryAsync();
 
-				command.CommandText = "INSERT INTO Coupon " +
-									  "(ProductName, Description, Amount)" +
-									  " VALUES('Lenovo Legion 5 Pro', 'Lenovo Legion Discount', 242)";
+				command.CommandText = @"INSERT INTO Coupon 
+											(ProductName, Description, Amount) 
+											VALUES('Lenovo Legion 5 Pro', 'Lenovo Legion Discount', 242)";
 				await command.ExecuteNonQueryAsync();
 			}
 		}

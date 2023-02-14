@@ -7,31 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<Protobuf Include="Protos/discount.proto" /> 
+	<Protobuf Include="Protos\discount.proto" Link="Protos\discount.proto" />
+	<Protobuf Include="Protos\test.proto" Link="Protos\test.proto" />
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="6.0.2" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Dapper" Version="2.0.123" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+    <PackageReference Include="Grpc.Core.Api" Version="2.51.0" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.51.0" />
     <PackageReference Include="Grpc.Tools" Version="2.51.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql" Version="6.0.8" />
     <PackageReference Include="Polly" Version="7.2.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="DTO\" />
-    <Folder Include="Entities\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Protos\" />
-    <Folder Include="Repositories\Interfaces\" />
+    <PackageReference Include="protobuf-net.Grpc" Version="1.0.179" />
   </ItemGroup>
 
 </Project>
