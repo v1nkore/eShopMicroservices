@@ -8,7 +8,6 @@
 
   <ItemGroup>
 	<Protobuf Include="Protos\discount.proto" Link="Protos\discount.proto" />
-	<Protobuf Include="Protos\test.proto" Link="Protos\test.proto" />
   </ItemGroup>
 
 	<ItemGroup>

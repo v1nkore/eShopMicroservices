@@ -14,10 +14,9 @@ message GetDiscountRequest {
 }
 
 message CreateDiscountCommand {
-	google.protobuf.Int32Value Id = 1;
-	string ProductName = 2;
-	string Description = 3;
-	int32 Amount = 4;
+	string ProductName = 1;
+	string Description = 2;
+	int32 Amount = 3;
 }
 
 message UpdateDiscountCommand {

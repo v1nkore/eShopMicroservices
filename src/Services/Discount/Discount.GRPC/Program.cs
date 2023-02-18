@@ -1,4 +1,5 @@
 using Discount.GRPC.Data;
+using Discount.GRPC.Extensions;
 using Discount.GRPC.Repositories;
 using Discount.GRPC.Repositories.Interfaces;
 using Discount.GRPC.Services;
@@ -29,11 +30,12 @@ var app = builder.Build();
 app.UseRouting();
 
 app.MapGrpcService<DiscountService>();
-app.MapGrpcService<TestService>();
 
 app.MapGet("/",
 	() =>
 		"Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+
+await app.Services.MigrateDatabaseAsync<Program>();
 
 app.Run();
 

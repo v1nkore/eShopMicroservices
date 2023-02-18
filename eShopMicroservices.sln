@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Utils", "src\Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.GRPC", "src\Services\Discount\Discount.GRPC\Discount.GRPC.csproj", "{B2394BCC-B3F5-4072-B887-1510B6C84D2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.IntegrationTests", "src\Services\Discount\Discount.IntegrationTests\Discount.IntegrationTests.csproj", "{ADAEFCDB-CAE9-45C1-BB45-D347914B541B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.IntegrationTests", "src\Services\Discount\Discount.IntegrationTests\Discount.IntegrationTests.csproj", "{ADAEFCDB-CAE9-45C1-BB45-D347914B541B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +127,7 @@ Global
 		{B840BCDC-370C-45CF-B7B2-AFF72FA55F76} = {0264857F-FB40-4C89-98B8-606FDCC24295}
 		{043D2125-80EB-49A1-ACE4-20AE90D45BEA} = {B840BCDC-370C-45CF-B7B2-AFF72FA55F76}
 		{B2394BCC-B3F5-4072-B887-1510B6C84D2B} = {9FFCFF6C-BE1B-438D-A8B9-0AB65FD84C28}
+		{ADAEFCDB-CAE9-45C1-BB45-D347914B541B} = {9FFCFF6C-BE1B-438D-A8B9-0AB65FD84C28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F0365679-2B04-4F41-9446-E899F813F0D7}

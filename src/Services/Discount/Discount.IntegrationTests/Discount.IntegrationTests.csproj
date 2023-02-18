@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.17.0" />
+    <PackageReference Include="AutoFixture.AutoMoq" Version="4.17.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.51.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.13" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />

@@ -21,11 +21,11 @@ public class DiscountRepository : IDiscountRepository
 		await using (var connection = new NpgsqlConnection(_options.Value.ConnectionString))
 		{
 			var coupon = await connection.QueryFirstOrDefaultAsync<Coupon>
-				("SELECT * FROM Coupon WHERE ProductName == @ProductName", new { ProductName = productName });
+				("SELECT * FROM Coupon WHERE ProductName = @ProductName", new { ProductName = productName });
 
 			if (coupon is null)
 			{
-				return new Coupon { ProductName = "No discount", Description = "No discount description", Amount = 0 };
+				return new Coupon("No discount", "No discount description", 0);
 			}
 
 			return coupon;
@@ -40,7 +40,8 @@ public class DiscountRepository : IDiscountRepository
 			("INSERT INTO Coupon (ProductName, Description, Amount) VALUES (@ProductName, @Description, @Amount)",
 				new { coupon.ProductName, coupon.Description, coupon.Amount });
 
-			return affected == 0;
+
+			return affected != 0;
 		}
 	}
 
@@ -52,7 +53,7 @@ public class DiscountRepository : IDiscountRepository
 			("UPDATE Coupon SET ProductName = @ProductName, Description = @Description, Amount = @Amount WHERE Id == @Id",
 				new { coupon.ProductName, coupon.Description, coupon.Amount, coupon.Id });
 
-			return affected == 0;
+			return affected != 0;
 		}
 	}
 
@@ -63,7 +64,7 @@ public class DiscountRepository : IDiscountRepository
 			var affected = await connection.ExecuteAsync
 				("DELETE FROM Coupon WHERE ProductName == @ProductName", new { ProductName = productName });
 
-			return affected == 0;
+			return affected != 0;
 		}
 	}
 }

@@ -59,7 +59,12 @@ public static class ServiceProviderExtensions
 
 				command.CommandText = @"INSERT INTO Coupon 
 											(ProductName, Description, Amount) 
-											VALUES('Lenovo Legion 5 Pro', 'Lenovo Legion Discount', 242)";
+											VALUES('Lenovo Legion 5 Pro', 'Lenovo Legion Discount', '242')";
+
+				command.CommandText = @"INSERT INTO Coupon 
+											(ProductName, Description, Amount) 
+											VALUES('Product', 'ProductDiscount', '20');";
+				command.ExecuteNonQuery();
 				await command.ExecuteNonQueryAsync();
 			}
 		}
