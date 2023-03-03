@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\Shared.Utils\Shared.Utils.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.Utils\Shared.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

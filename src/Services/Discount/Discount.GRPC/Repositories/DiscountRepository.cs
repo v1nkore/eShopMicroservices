@@ -1,6 +1,6 @@
 using Dapper;
-using Discount.GRPC.Data;
 using Discount.GRPC.Entities;
+using Discount.GRPC.Options;
 using Discount.GRPC.Repositories.Interfaces;
 using Microsoft.Extensions.Options;
 using Npgsql;

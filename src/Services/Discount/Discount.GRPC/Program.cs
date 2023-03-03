@@ -1,16 +1,16 @@
-using Discount.GRPC.Data;
+using System.Net;
 using Discount.GRPC.Extensions;
+using Discount.GRPC.Options;
 using Discount.GRPC.Repositories;
 using Discount.GRPC.Repositories.Interfaces;
 using Discount.GRPC.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddGrpc();
 
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(Discount.GRPC.Program));
 
 builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString($"{NpgsqlOptions.Section}:ConnectionString"));
 
@@ -35,10 +35,13 @@ app.MapGet("/",
 	() =>
 		"Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
-await app.Services.MigrateDatabaseAsync<Program>();
+await app.Services.MigrateDatabaseAsync<Discount.GRPC.Program>();
 
 app.Run();
 
-public partial class Program
+namespace Discount.GRPC
 {
+	public partial class Program
+	{
+	}
 }

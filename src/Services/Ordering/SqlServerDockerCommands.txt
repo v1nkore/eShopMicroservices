@@ -1,0 +1,2 @@
+﻿run: 
+stop: docker stop sql-server

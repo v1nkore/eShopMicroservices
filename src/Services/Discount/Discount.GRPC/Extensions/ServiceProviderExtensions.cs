@@ -1,4 +1,4 @@
-using Discount.GRPC.Data;
+using Discount.GRPC.Options;
 using Microsoft.Extensions.Options;
 using Npgsql;
 using Polly;
@@ -13,25 +13,17 @@ public static class ServiceProviderExtensions
 		{
 			var options = scope.ServiceProvider.GetRequiredService<IOptions<NpgsqlOptions>>();
 
-			try
-			{
-				var retry = Policy.Handle<NpgsqlException>()
-					.WaitAndRetryAsync(
-						retryCount: 5,
-						sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
-						onRetry: (exception, retryCount, context) =>
-						{
-							//TODO: Logging
-							Console.WriteLine($"Retry {retryCount} of {context.PolicyKey} at {context.OperationKey}, due to: {exception}");
-						});
+			var retry = Policy.Handle<NpgsqlException>()
+				.WaitAndRetryAsync(
+					retryCount: 5,
+					sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+					onRetry: (exception, retryCount, context) =>
+					{
+						// TODO: Logging
+						Console.WriteLine($"Retry {retryCount} of {context.PolicyKey} at {context.OperationKey}, due to: {exception}");
+					});
 
-				await retry.ExecuteAsync(async () => await ExecuteMigrations(options.Value.ConnectionString));
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
+			await retry.ExecuteAsync(async () => await ExecuteMigrations(options.Value.ConnectionString));
 		}
 	}
 

@@ -1,6 +1,7 @@
 ﻿using Catalog.API.DTO;
 using Catalog.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Shared.ServiceResponses;
 
 namespace Catalog.API.Controllers
 {
@@ -18,9 +19,9 @@ namespace Catalog.API.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetAsync([FromRoute] string id)
 		{
-			var product = await _productRepository.GetProductAsync(id);
+			var response = await _productRepository.GetProductAsync(id);
 
-			return product is null ? NotFound() : Ok(product);
+			return response.Value is null ? NotFound() : Ok(response.Value);
 		}
 
 		[HttpGet("all")]
@@ -28,9 +29,9 @@ namespace Catalog.API.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetAllAsync()
 		{
-			var products = await _productRepository.GetProductsAsync();
+			var response = await _productRepository.GetProductsAsync();
 
-			return products is null ? NotFound() : Ok(products);
+			return response.Value is null ? NotFound(response.Error) : Ok(response.Value);
 		}
 
 		[HttpGet("name")]
@@ -38,9 +39,7 @@ namespace Catalog.API.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetByNameAsync([FromQuery(Name = "n")] string name)
 		{
-			var products = await _productRepository.GetProductsByNameAsync(name);
-
-			return products is null ? NotFound() : Ok(products);
+			return Ok(await _productRepository.GetProductsByNameAsync(name));
 		}
 
 		[HttpGet("category")]
@@ -48,9 +47,7 @@ namespace Catalog.API.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetByCategoryAsync([FromQuery(Name = "c")] string category)
 		{
-			var products = await _productRepository.GetProductByCategoryAsync(category);
-
-			return products is null ? NotFound() : Ok(products);
+			return Ok(await _productRepository.GetProductByCategoryAsync(category));
 		}
 
 
@@ -58,9 +55,7 @@ namespace Catalog.API.Controllers
 		[ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
 		public async Task<IActionResult> CreateAsync([FromBody] ProductCommand product)
 		{
-			var id = await _productRepository.CreateProductAsync(product);
-
-			return Ok(id);
+			return Ok(await _productRepository.CreateProductAsync(product));
 		}
 
 		[HttpPatch]
@@ -68,9 +63,9 @@ namespace Catalog.API.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> UpdateAsync([FromBody] ProductCommand product)
 		{
-			var result = await _productRepository.ReplaceProductAsync(product);
+			var response = await _productRepository.ReplaceProductAsync(product);
 
-			return result ? Ok(result) : BadRequest(product);
+			return response.Status == ServiceResponseStatus.Success ? Ok(response.Value) : BadRequest(response.Error);
 		}
 
 		[HttpDelete("{id}")]
@@ -78,9 +73,9 @@ namespace Catalog.API.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> DeleteAsync([FromRoute] string id)
 		{
-			var result = await _productRepository.DeleteProductAsync(id);
+			var response = await _productRepository.DeleteProductAsync(id);
 
-			return result ? Ok(result) : BadRequest(id);
+			return response.Status == ServiceResponseStatus.Success ? Ok(response.Value) : BadRequest(response.Error);
 		}
 	}
 }

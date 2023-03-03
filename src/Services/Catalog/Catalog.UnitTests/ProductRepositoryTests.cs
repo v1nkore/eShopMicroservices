@@ -6,7 +6,7 @@ using Catalog.API.Repositories;
 using Catalog.UnitTests.FakeResults;
 using MongoDB.Driver;
 using Moq;
-using GuidConverter = Shared.Utils.Guid.GuidConverter;
+using GuidConverter = Shared.Guid.GuidConverter;
 
 namespace Catalog.UnitTests
 {
@@ -55,10 +55,10 @@ namespace Catalog.UnitTests
 			var response = await productRepo.GetProductAsync(GuidConverter.Encode(_products.First().Id));
 
 			// assert
-			Assert.NotNull(response);
-			Assert.Equal(response.Name, expectedProduct.Name);
-			Assert.Equal(response.Category, expectedProduct.Category);
-			Assert.Equal(response.Price, expectedProduct.Price);
+			Assert.NotNull(response.Value);
+			Assert.Equal(response.Value!.Name, expectedProduct.Name);
+			Assert.Equal(response.Value.Category, expectedProduct.Category);
+			Assert.Equal(response.Value.Price, expectedProduct.Price);
 
 			_collectionMock.VerifyFindAsyncCall();
 		}
@@ -70,7 +70,7 @@ namespace Catalog.UnitTests
 			var expectedProducts = MongoStorage.GetProducts().ToList();
 			_products.AddRange(expectedProducts);
 			_mapperMock.Setup(s =>
-					s.Map<List<Product>, List<ProductResponse>>(expectedProducts))
+					s.Map<IReadOnlyList<ProductResponse>>(expectedProducts))
 				.Returns(MongoStorage.GetMappedProducts().ToList());
 
 			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
@@ -79,8 +79,8 @@ namespace Catalog.UnitTests
 			var response = await productRepo.GetProductsAsync();
 
 			// assert
-			Assert.NotNull(response);
-			Assert.Equal(response.Count(), expectedProducts.Count);
+			Assert.NotNull(response.Value);
+			Assert.Equal(response.Value!.Count(), expectedProducts.Count);
 
 			_collectionMock.VerifyFindAsyncCall();
 		}
@@ -94,7 +94,7 @@ namespace Catalog.UnitTests
 			var expectedProducts = MongoStorage.GetProducts().Where(p => p.Name == name).ToList();
 			_products.AddRange(expectedProducts);
 			_mapperMock.Setup(s =>
-					s.Map<List<Product>, List<ProductResponse>>(expectedProducts))
+					s.Map<IReadOnlyList<ProductResponse>>(expectedProducts))
 				.Returns(MongoStorage.GetMappedProducts().Where(p => p.Name == name).ToList());
 
 			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
@@ -103,8 +103,8 @@ namespace Catalog.UnitTests
 			var response = await productRepo.GetProductsByNameAsync(name);
 
 			// assert
-			Assert.NotNull(response);
-			Assert.Equal(response.Count(), expectedProducts.Count);
+			Assert.NotNull(response.Value);
+			Assert.Equal(response.Value!.Count(), expectedProducts.Count);
 
 			_collectionMock.VerifyFindAsyncCall();
 		}
@@ -117,7 +117,7 @@ namespace Catalog.UnitTests
 			var expectedProducts = MongoStorage.GetProducts().Where(p => p.Category == category).ToList();
 			_products.AddRange(expectedProducts);
 			_mapperMock.Setup(s =>
-					s.Map<List<Product>, List<ProductResponse>>(expectedProducts))
+					s.Map<IReadOnlyList<ProductResponse>>(expectedProducts))
 				.Returns(MongoStorage.GetMappedProducts().Where(p => p.Category == category).ToList());
 
 			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
@@ -127,7 +127,7 @@ namespace Catalog.UnitTests
 
 			// assert
 			Assert.NotNull(response);
-			Assert.Equal(response.Count(), expectedProducts.Count);
+			Assert.Equal(response.Value!.Count(), expectedProducts.Count);
 		}
 
 
@@ -151,7 +151,7 @@ namespace Catalog.UnitTests
 
 			// assert
 			Assert.NotNull(response);
-			Assert.Equal(22, response.Length);
+			Assert.Equal(22, response.Value!.Length);
 
 			_collectionMock.Verify(v => v.InsertOneAsync(
 				It.IsAny<Product>(),
@@ -169,11 +169,11 @@ namespace Catalog.UnitTests
 			_mapperMock.Setup(s =>
 				s.Map<ProductCommand, Product>(productCommand)).Returns(MongoStorage.GetOneMappedProductCommand());
 			_collectionMock.Setup(s =>
-				s.ReplaceOneAsync(
-					It.IsAny<FilterDefinition<Product>>(),
-					It.IsAny<Product>(),
-					It.IsAny<ReplaceOptions>(),
-					It.IsAny<CancellationToken>()))
+					s.ReplaceOneAsync(
+						It.IsAny<FilterDefinition<Product>>(),
+						It.IsAny<Product>(),
+						It.IsAny<ReplaceOptions>(),
+						It.IsAny<CancellationToken>()))
 				.ReturnsAsync(replaceResult);
 
 			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
@@ -182,7 +182,7 @@ namespace Catalog.UnitTests
 			var response = await productRepo.ReplaceProductAsync(productCommand);
 
 			// assert
-			Assert.True(response);
+			Assert.True(response.Value);
 
 			_collectionMock.Verify(v => v.ReplaceOneAsync(
 				It.IsAny<FilterDefinition<Product>>(),
@@ -209,7 +209,7 @@ namespace Catalog.UnitTests
 			var response = await productRepo.DeleteProductAsync(GuidConverter.Encode(MongoStorage.GetOneProduct().Id));
 
 			// assert
-			Assert.True(response);
+			Assert.True(response.Value);
 
 			_collectionMock.Verify(v =>
 				v.DeleteOneAsync(

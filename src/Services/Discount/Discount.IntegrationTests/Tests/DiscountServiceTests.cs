@@ -1,7 +1,8 @@
 ﻿using AutoFixture;
 using AutoMapper;
-using Discount.GRPC.Data;
+using Discount.GRPC;
 using Discount.GRPC.Entities;
+using Discount.GRPC.Options;
 using Discount.GRPC.Repositories.Interfaces;
 using Discount.IntegrationTests.Factory;
 using Discount.IntegrationTests.Helpers;

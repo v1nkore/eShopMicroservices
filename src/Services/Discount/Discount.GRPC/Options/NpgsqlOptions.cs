@@ -1,4 +1,4 @@
-namespace Discount.GRPC.Data;
+namespace Discount.GRPC.Options;
 
 public class NpgsqlOptions : INpgsqlOptions
 {

@@ -1,3 +1,5 @@
+namespace Discount.GRPC.Extensions;
+
 public static class EnvironmentExtensions
 {
 	public const string IntegrationTestingEnvironmentName = "Integration testing";
