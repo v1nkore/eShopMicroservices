@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Shared.Configs\Shared.Configs.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus.Messages\EventBus.Messages.csproj" />
     <ProjectReference Include="..\..\Discount\Discount.GRPC\Discount.GRPC.csproj" />
   </ItemGroup>
