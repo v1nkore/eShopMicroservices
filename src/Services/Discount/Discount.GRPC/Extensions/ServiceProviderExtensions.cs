@@ -56,7 +56,6 @@ public static class ServiceProviderExtensions
 				command.CommandText = @"INSERT INTO Coupon 
 											(ProductName, Description, Amount) 
 											VALUES('Product', 'ProductDiscount', '20');";
-				command.ExecuteNonQuery();
 				await command.ExecuteNonQueryAsync();
 			}
 		}
