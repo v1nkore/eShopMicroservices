@@ -6,7 +6,7 @@ using Catalog.API.Repositories;
 using Catalog.UnitTests.FakeResults;
 using MongoDB.Driver;
 using Moq;
-using GuidConverter = Shared.Guid.GuidConverter;
+using GuidConverter = Shared.Utilities.Guid.GuidConverter;
 
 namespace Catalog.UnitTests
 {
@@ -49,10 +49,10 @@ namespace Catalog.UnitTests
 			_mapperMock.Setup(s =>
 				s.Map<Product, ProductResponse>(It.IsAny<Product>())).Returns(expectedProduct);
 
-			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
+			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
 
 			// act
-			var response = await productRepo.GetProductAsync(GuidConverter.Encode(_products.First().Id));
+			var response = await productRepository.GetProductAsync(GuidConverter.Encode(_products.First().Id));
 
 			// assert
 			Assert.NotNull(response.Value);
@@ -73,10 +73,10 @@ namespace Catalog.UnitTests
 					s.Map<IReadOnlyList<ProductResponse>>(expectedProducts))
 				.Returns(MongoStorage.GetMappedProducts().ToList());
 
-			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
+			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
 
 			// act
-			var response = await productRepo.GetProductsAsync();
+			var response = await productRepository.GetProductsAsync();
 
 			// assert
 			Assert.NotNull(response.Value);
@@ -97,10 +97,10 @@ namespace Catalog.UnitTests
 					s.Map<IReadOnlyList<ProductResponse>>(expectedProducts))
 				.Returns(MongoStorage.GetMappedProducts().Where(p => p.Name == name).ToList());
 
-			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
+			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
 
 			// act
-			var response = await productRepo.GetProductsByNameAsync(name);
+			var response = await productRepository.GetProductsByNameAsync(name);
 
 			// assert
 			Assert.NotNull(response.Value);
@@ -120,10 +120,10 @@ namespace Catalog.UnitTests
 					s.Map<IReadOnlyList<ProductResponse>>(expectedProducts))
 				.Returns(MongoStorage.GetMappedProducts().Where(p => p.Category == category).ToList());
 
-			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
+			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
 
 			// act
-			var response = await productRepo.GetProductByCategoryAsync(category);
+			var response = await productRepository.GetProductByCategoryAsync(category);
 
 			// assert
 			Assert.NotNull(response);
@@ -144,10 +144,10 @@ namespace Catalog.UnitTests
 					It.IsAny<InsertOneOptions>(),
 					It.IsAny<CancellationToken>()));
 
-			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
+			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
 
 			// act
-			var response = await productRepo.CreateProductAsync(productCommand);
+			var response = await productRepository.CreateProductAsync(productCommand);
 
 			// assert
 			Assert.NotNull(response);
@@ -176,10 +176,10 @@ namespace Catalog.UnitTests
 						It.IsAny<CancellationToken>()))
 				.ReturnsAsync(replaceResult);
 
-			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
+			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
 
 			// act
-			var response = await productRepo.ReplaceProductAsync(productCommand);
+			var response = await productRepository.ReplaceProductAsync(productCommand);
 
 			// assert
 			Assert.True(response.Value);
@@ -203,10 +203,10 @@ namespace Catalog.UnitTests
 						It.IsAny<CancellationToken>()))
 				.ReturnsAsync(deleteResult);
 
-			var productRepo = new ProductRepository(_contextMock.Object, _mapperMock.Object);
+			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
 
 			// act
-			var response = await productRepo.DeleteProductAsync(GuidConverter.Encode(MongoStorage.GetOneProduct().Id));
+			var response = await productRepository.DeleteProductAsync(GuidConverter.Encode(MongoStorage.GetOneProduct().Id));
 
 			// assert
 			Assert.True(response.Value);

@@ -1,4 +1,4 @@
-﻿namespace Shared.Configs
+﻿namespace Shared.Configs.Configs
 {
 	public static class CacheConfig
 	{

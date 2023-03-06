@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus.Messages\EventBus.Messages.csproj" />
     <ProjectReference Include="..\..\Discount\Discount.GRPC\Discount.GRPC.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.Configs\Shared.Configs.csproj" />
   </ItemGroup>
 
 </Project>

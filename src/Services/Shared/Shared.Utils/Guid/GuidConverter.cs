@@ -1,4 +1,4 @@
-﻿namespace Shared.Guid
+﻿namespace Shared.Utilities.Guid
 {
 	public static class GuidConverter
 	{

@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.Utils\Shared.Utilities.csproj" />
     <ProjectReference Include="..\Catalog.API\Catalog.API.csproj" />
   </ItemGroup>
 

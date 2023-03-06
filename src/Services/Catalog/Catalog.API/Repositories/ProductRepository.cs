@@ -4,8 +4,8 @@ using Catalog.API.DTO;
 using Catalog.API.Entities;
 using Catalog.API.Repositories.Interfaces;
 using MongoDB.Driver;
-using Shared.Guid;
-using Shared.ServiceResponses;
+using Shared.Responses.ServiceResponses;
+using Shared.Utilities.Guid;
 
 namespace Catalog.API.Repositories
 {

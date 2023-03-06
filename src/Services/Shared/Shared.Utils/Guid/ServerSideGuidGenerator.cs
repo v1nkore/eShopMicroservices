@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Shared.Guid
+namespace Shared.Utilities.Guid
 {
 	public static class ServerSideGuidGenerator
 	{

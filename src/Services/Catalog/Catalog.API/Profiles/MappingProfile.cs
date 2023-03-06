@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Catalog.API.DTO;
 using Catalog.API.Entities;
-using Shared.Guid;
+using Shared.Utilities.Guid;
 
 namespace Catalog.API.Profiles
 {

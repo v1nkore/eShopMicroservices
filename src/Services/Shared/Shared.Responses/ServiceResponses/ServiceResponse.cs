@@ -1,4 +1,4 @@
-﻿namespace Shared.ServiceResponses
+﻿namespace Shared.Responses.ServiceResponses
 {
 	public class ServiceResponse<TValue, TError>
 	{

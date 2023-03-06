@@ -1,7 +1,7 @@
 ﻿using Catalog.API.Data.Interfaces;
 using Catalog.API.Entities;
 using MongoDB.Driver;
-using Shared.Guid;
+using Shared.Utilities.Guid;
 
 namespace Catalog.API.Data
 {

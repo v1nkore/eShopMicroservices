@@ -1,5 +1,5 @@
 ﻿using Catalog.API.DTO;
-using Shared.ServiceResponses;
+using Shared.Responses.ServiceResponses;
 
 namespace Catalog.API.Repositories.Interfaces
 {

@@ -1,4 +1,4 @@
-﻿namespace Shared.ServiceResponses
+﻿namespace Shared.Responses.ServiceResponses
 {
 	public enum ServiceResponseStatus
 	{

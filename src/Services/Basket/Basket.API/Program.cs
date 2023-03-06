@@ -3,7 +3,7 @@ using Basket.API.Repositories;
 using Basket.API.Repositories.Interfaces;
 using MassTransit;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Shared.Configs;
+using Shared.Configs.Configs;
 
 var builder = WebApplication.CreateBuilder(args);
 
