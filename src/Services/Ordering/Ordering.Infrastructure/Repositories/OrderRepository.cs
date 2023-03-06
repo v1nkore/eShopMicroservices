@@ -15,9 +15,14 @@ namespace Ordering.Infrastructure.Repositories
 			_dbContext = dbContext;
 		}
 
-		public async Task<IEnumerable<Order>?> GetAsync(Expression<Func<Order, bool>> predicate)
+		public async Task<IEnumerable<Order>?> GetAsync(Expression<Func<Order, bool>>? predicate = null)
 		{
-			return await _dbContext.Orders.Where(predicate).ToListAsync();
+			if (predicate is not null)
+			{
+				return await _dbContext.Orders.Where(predicate).ToListAsync();
+			}
+
+			return await _dbContext.Orders.ToListAsync();
 		}
 
 		public async Task<Order?> GetByIdAsync(Guid id)
