@@ -1,10 +1,11 @@
 ﻿using Catalog.API.Data;
 using Catalog.API.Entities;
+using Catalog.UnitTests.Helpers;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Moq;
 
-namespace Catalog.UnitTests
+namespace Catalog.UnitTests.Tests
 {
 	public sealed class MongoCatalogContextTests
 	{
@@ -22,7 +23,7 @@ namespace Catalog.UnitTests
 		}
 
 		[Fact]
-		public void MongoCatalogContext_Constructor_Success()
+		public void MongoCatalogContext_ShouldCreateCatalogContext()
 		{
 			//arrange
 			var options = MockHelper.Options;

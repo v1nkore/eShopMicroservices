@@ -25,7 +25,7 @@ public class DiscountRepository : IDiscountRepository
 
 			if (coupon is null)
 			{
-				return new Coupon("No discount", "No discount description", 0);
+				return new Coupon(string.Empty, string.Empty, 0);
 			}
 
 			return coupon;

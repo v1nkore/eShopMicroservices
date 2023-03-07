@@ -7,6 +7,6 @@ namespace Catalog.API.Data.Interfaces
 	{
 		IMongoCollection<Product> Products { get; }
 
-		IMongoCollection<T> GetCollection<T>(string name);
+		IMongoCollection<T>? GetCollection<T>(string name);
 	}
 }

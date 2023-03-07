@@ -2,7 +2,7 @@
 using Catalog.API.Entities;
 using Shared.Utilities.Guid;
 
-namespace Catalog.UnitTests
+namespace Catalog.UnitTests.Helpers
 {
 	internal static class MongoStorage
 	{

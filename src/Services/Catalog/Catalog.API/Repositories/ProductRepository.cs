@@ -28,7 +28,7 @@ namespace Catalog.API.Repositories
 
 			return new ServiceResponse<IReadOnlyList<ProductResponse>, string>()
 			{
-				Value = _mapper.Map<List<ProductResponse>>(products),
+				Value = _mapper.Map<IReadOnlyList<ProductResponse>>(products),
 				Status = ServiceResponseStatus.Success
 			};
 		}
@@ -43,7 +43,7 @@ namespace Catalog.API.Repositories
 			{
 				return new ServiceResponse<ProductResponse, string>()
 				{
-					Value = _mapper.Map<Product, ProductResponse>(product),
+					Value = _mapper.Map<ProductResponse>(product),
 					Status = ServiceResponseStatus.Success
 				};
 			}
@@ -63,7 +63,7 @@ namespace Catalog.API.Repositories
 
 			return new ServiceResponse<IReadOnlyList<ProductResponse>, string>()
 			{
-				Value = _mapper.Map<List<ProductResponse>>(products),
+				Value = _mapper.Map<IReadOnlyList<ProductResponse>>(products),
 				Status = ServiceResponseStatus.Success
 			};
 		}
@@ -83,7 +83,7 @@ namespace Catalog.API.Repositories
 
 		public async Task<ServiceResponse<string, string>> CreateProductAsync(ProductCommand product)
 		{
-			var mapped = _mapper.Map<ProductCommand, Product>(product);
+			var mapped = _mapper.Map<Product>(product);
 			await _context.GetCollection<Product>(nameof(Product)).InsertOneAsync(mapped);
 
 			return new ServiceResponse<string, string>()
@@ -95,7 +95,7 @@ namespace Catalog.API.Repositories
 
 		public async Task<ServiceResponse<bool, string>> ReplaceProductAsync(ProductCommand product)
 		{
-			var mapped = _mapper.Map<ProductCommand, Product>(product);
+			var mapped = _mapper.Map<Product>(product);
 			var replaceResult = await _context.GetCollection<Product>(nameof(Product)).ReplaceOneAsync(p => p.Id == mapped.Id, mapped);
 
 			var success = replaceResult.IsAcknowledged && replaceResult.ModifiedCount > 0;

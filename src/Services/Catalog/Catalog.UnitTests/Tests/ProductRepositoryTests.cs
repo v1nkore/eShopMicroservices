@@ -4,11 +4,13 @@ using Catalog.API.DTO;
 using Catalog.API.Entities;
 using Catalog.API.Repositories;
 using Catalog.UnitTests.FakeResults;
+using Catalog.UnitTests.Helpers;
 using MongoDB.Driver;
 using Moq;
+using Shared.Responses.ServiceResponses;
 using GuidConverter = Shared.Utilities.Guid.GuidConverter;
 
-namespace Catalog.UnitTests
+namespace Catalog.UnitTests.Tests
 {
 	public sealed class ProductRepositoryTests
 	{
@@ -36,7 +38,6 @@ namespace Catalog.UnitTests
 				.ReturnsAsync(_productCursorMock.Object);
 		}
 
-
 		[Fact]
 		public async Task GetProductAsync_ShouldReturnProduct_WhenItExists()
 		{
@@ -47,7 +48,7 @@ namespace Catalog.UnitTests
 
 			var expectedProduct = MongoStorage.GetOneProductResponse();
 			_mapperMock.Setup(s =>
-				s.Map<Product, ProductResponse>(It.IsAny<Product>())).Returns(expectedProduct);
+				s.Map<ProductResponse>(It.IsAny<Product>())).Returns(expectedProduct);
 
 			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
 
@@ -60,7 +61,23 @@ namespace Catalog.UnitTests
 			Assert.Equal(response.Value.Category, expectedProduct.Category);
 			Assert.Equal(response.Value.Price, expectedProduct.Price);
 
+			_mapperMock.VerifyMap<Product, ProductResponse>(product, Times.Once());
 			_collectionMock.VerifyFindAsyncCall();
+		}
+
+		[Fact]
+		public async Task GetProductAsync_ShouldReturnError_WhenItsNotFound()
+		{
+			// arrange
+			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
+
+			// act
+			var response = await productRepository.GetProductAsync(GuidConverter.Encode(Guid.Empty));
+
+			// assert
+			Assert.Null(response.Value);
+			Assert.NotNull(response.Error);
+			Assert.Equal(ServiceResponseStatus.Failed, response.Status);
 		}
 
 		[Fact]
@@ -82,15 +99,15 @@ namespace Catalog.UnitTests
 			Assert.NotNull(response.Value);
 			Assert.Equal(response.Value!.Count(), expectedProducts.Count);
 
+			_mapperMock.VerifyMap<List<Product>, IReadOnlyList<ProductResponse>>(expectedProducts, Times.Once());
 			_collectionMock.VerifyFindAsyncCall();
 		}
-
 
 		[Fact]
 		public async Task GetProductsByNameAsync_ShouldReturnProductList_WhenItExists()
 		{
 			// arrange
-			var name = "Product 2";
+			const string name = "Product 2";
 			var expectedProducts = MongoStorage.GetProducts().Where(p => p.Name == name).ToList();
 			_products.AddRange(expectedProducts);
 			_mapperMock.Setup(s =>
@@ -106,6 +123,7 @@ namespace Catalog.UnitTests
 			Assert.NotNull(response.Value);
 			Assert.Equal(response.Value!.Count(), expectedProducts.Count);
 
+			_mapperMock.VerifyMap<List<Product>, IReadOnlyList<ProductResponse>>(expectedProducts, Times.Once());
 			_collectionMock.VerifyFindAsyncCall();
 		}
 
@@ -113,7 +131,7 @@ namespace Catalog.UnitTests
 		public async Task GetProductsByCategoryAsync_ShouldReturnProductList_WhenItExists()
 		{
 			// arrange
-			var category = "Category 5";
+			const string category = "Category 5";
 			var expectedProducts = MongoStorage.GetProducts().Where(p => p.Category == category).ToList();
 			_products.AddRange(expectedProducts);
 			_mapperMock.Setup(s =>
@@ -128,16 +146,18 @@ namespace Catalog.UnitTests
 			// assert
 			Assert.NotNull(response);
 			Assert.Equal(response.Value!.Count(), expectedProducts.Count);
+
+			_mapperMock.VerifyMap<List<Product>, IReadOnlyList<ProductResponse>>(expectedProducts, Times.Once());
+			_collectionMock.VerifyFindAsyncCall();
 		}
 
-
 		[Fact]
-		public async Task CreateProductAsync_ShouldCreateProduct_Success()
+		public async Task CreateProductAsync_ShouldCreateProduct()
 		{
 			// arrange
 			var productCommand = MongoStorage.GetOneProductCommand();
 			_mapperMock.Setup(s =>
-				s.Map<ProductCommand, Product>(productCommand)).Returns(MongoStorage.GetOneMappedProductCommand());
+				s.Map<Product>(productCommand)).Returns(MongoStorage.GetOneMappedProductCommand());
 			_collectionMock.Setup(s =>
 				s.InsertOneAsync(
 					It.IsAny<Product>(),
@@ -153,28 +173,27 @@ namespace Catalog.UnitTests
 			Assert.NotNull(response);
 			Assert.Equal(22, response.Value!.Length);
 
+			_mapperMock.Verify(v => v.Map<Product>(productCommand), Times.Once);
 			_collectionMock.Verify(v => v.InsertOneAsync(
 				It.IsAny<Product>(),
 				It.IsAny<InsertOneOptions>(),
 				It.IsAny<CancellationToken>()), Times.Once);
 		}
 
-
 		[Fact]
-		public async Task ReplaceProductAsync_ShouldUpdateProduct_Success()
+		public async Task ReplaceProductAsync_ShouldReplaceProduct_WhenItsFound()
 		{
 			// arrange
 			var productCommand = MongoStorage.GetOneProductCommand();
-			var replaceResult = new FakeReplaceOneResult();
 			_mapperMock.Setup(s =>
-				s.Map<ProductCommand, Product>(productCommand)).Returns(MongoStorage.GetOneMappedProductCommand());
+				s.Map<Product>(productCommand)).Returns(MongoStorage.GetOneMappedProductCommand());
 			_collectionMock.Setup(s =>
 					s.ReplaceOneAsync(
 						It.IsAny<FilterDefinition<Product>>(),
 						It.IsAny<Product>(),
 						It.IsAny<ReplaceOptions>(),
 						It.IsAny<CancellationToken>()))
-				.ReturnsAsync(replaceResult);
+				.ReturnsAsync(new FakeReplaceOneResult(true, 1));
 
 			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
 
@@ -184,6 +203,7 @@ namespace Catalog.UnitTests
 			// assert
 			Assert.True(response.Value);
 
+			_mapperMock.VerifyMap<ProductCommand, Product>(productCommand, Times.Once());
 			_collectionMock.Verify(v => v.ReplaceOneAsync(
 				It.IsAny<FilterDefinition<Product>>(),
 				It.IsAny<Product>(),
@@ -191,9 +211,42 @@ namespace Catalog.UnitTests
 				It.IsAny<CancellationToken>()), Times.Once);
 		}
 
+		[Fact]
+		public async Task ReplaceProductAsync_ShouldReturnError_WhenItsNotFound()
+		{
+			// arrange
+			var productCommand = new ProductCommand() { Id = GuidConverter.Encode(Guid.Empty) };
+			var product = new Product() { Id = Guid.Empty };
+			_mapperMock.Setup(s =>
+				s.Map<Product>(productCommand)).Returns(product);
+			_collectionMock.Setup(s =>
+					s.ReplaceOneAsync(
+						It.IsAny<FilterDefinition<Product>>(),
+						It.IsAny<Product>(),
+						It.IsAny<ReplaceOptions>(),
+						It.IsAny<CancellationToken>()))
+				.ReturnsAsync(new FakeReplaceOneResult(false, 0));
+
+			var productRepository = new ProductRepository(_contextMock.Object, _mapperMock.Object);
+
+			// act
+			var response = await productRepository.ReplaceProductAsync(productCommand);
+
+			// assert
+			Assert.False(response.Value);
+			Assert.NotNull(response.Error);
+			Assert.Equal(ServiceResponseStatus.Failed, response.Status);
+
+			_mapperMock.VerifyMap<ProductCommand, Product>(productCommand, Times.Once());
+			_collectionMock.Verify(v => v.ReplaceOneAsync(
+				It.IsAny<FilterDefinition<Product>>(),
+				It.IsAny<Product>(),
+				It.IsAny<ReplaceOptions>(),
+				It.IsAny<CancellationToken>()), Times.Once);
+		}
 
 		[Fact]
-		public async Task DeleteProductAsync_ShouldDeleteProduct_Success()
+		public async Task DeleteProductAsync_ShouldDeleteProduct()
 		{
 			// arrange
 			var deleteResult = new FakeDeleteOneResult();

@@ -18,11 +18,11 @@ namespace Catalog.API.Data
 			_database = _client.GetDatabase(options.Value.DatabaseName);
 		}
 
-		public IMongoCollection<T> GetCollection<T>(string name)
+		public IMongoCollection<T>? GetCollection<T>(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 			{
-				return null!;
+				return null;
 			}
 
 			return _database.GetCollection<T>(name);

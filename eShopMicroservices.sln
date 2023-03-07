@@ -62,7 +62,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Responses", "src\Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Configs", "src\Services\Shared\Shared.Configs\Shared.Configs.csproj", "{15A143CE-9FA4-438A-8AD9-6AF4F4FFA4D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.UnitTests", "src\Services\Ordering\Ordering.UnitTests\Ordering.UnitTests.csproj", "{051A4EAA-2EF6-4BE4-BCE4-E341673B4C02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.UnitTests", "src\Services\Ordering\Ordering.UnitTests\Ordering.UnitTests.csproj", "{051A4EAA-2EF6-4BE4-BCE4-E341673B4C02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

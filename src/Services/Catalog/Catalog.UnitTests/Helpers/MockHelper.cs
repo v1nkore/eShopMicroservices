@@ -1,10 +1,11 @@
-﻿using Catalog.API.Data;
+﻿using AutoMapper;
+using Catalog.API.Data;
 using Catalog.API.Entities;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Moq;
 
-namespace Catalog.UnitTests
+namespace Catalog.UnitTests.Helpers
 {
 	internal static class MockHelper
 	{
@@ -15,7 +16,7 @@ namespace Catalog.UnitTests
 
 		public static MongoDbOptions Options => new()
 		{
-			ConnectionString = "mongodb://testCon",
+			ConnectionString = "mongodb://testConnection",
 			DatabaseName = "testDb",
 			CollectionName = "testCollection",
 		};
@@ -26,6 +27,11 @@ namespace Catalog.UnitTests
 				It.IsAny<FilterDefinition<T>>(),
 				It.IsAny<FindOptions<T>>(),
 				It.IsAny<CancellationToken>()), Times.Once);
+		}
+
+		public static void VerifyMap<TSource, TDestination>(this Mock<IMapper> mapperMock, TSource source, Times times)
+		{
+			mapperMock.Verify(v => v.Map<TDestination>(source), times);
 		}
 	}
 }

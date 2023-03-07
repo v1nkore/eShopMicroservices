@@ -40,6 +40,7 @@ namespace Discount.IntegrationTests.Tests
 				services.AddSingleton<IDiscountRepository>(_discountRepositoryMock.Object);
 				services.AddSingleton<IOptions<NpgsqlOptions>>(_npgsqlOptionsMock.Object);
 			};
+			_npgsqlOptionsMock.Setup(s => s.Value).Returns(_options);
 		}
 
 		public GrpcChannel GrpcChannel { get; set; } = null!;
@@ -54,7 +55,6 @@ namespace Discount.IntegrationTests.Tests
 
 			_mapperMock.Setup(s => s.Map<CouponResponse>(coupon)).Returns(couponResponse);
 			_discountRepositoryMock.Setup(s => s.GetDiscountAsync(request.ProductName)).ReturnsAsync(coupon);
-			_npgsqlOptionsMock.Setup(s => s.Value).Returns(_options);
 
 			Configure(_configureMockServices);
 
@@ -72,6 +72,29 @@ namespace Discount.IntegrationTests.Tests
 		}
 
 		[Fact]
+		public async Task GetDiscountAsync_ShouldReturnPlug_WhenItsNotFound()
+		{
+			// arrange
+			var coupon = new Coupon(string.Empty, string.Empty, 0);
+			var couponResponse = MappingHelper.MapCouponResponseFromCoupon(coupon);
+			var request = new GetDiscountRequest() { ProductName = coupon.ProductName };
+
+			_mapperMock.Setup(s => s.Map<CouponResponse>(coupon)).Returns(couponResponse);
+			_discountRepositoryMock.Setup(s => s.GetDiscountAsync(request.ProductName)).ReturnsAsync(coupon);
+
+			Configure(_configureMockServices);
+
+			// act
+			var response = await _client.GetDiscountAsync(request);
+
+			// assert
+			Assert.NotNull(response);
+			Assert.True(string.IsNullOrEmpty(response.ProductName));
+			Assert.True(string.IsNullOrEmpty(response.Description));
+			Assert.Equal(0, response.Amount);
+		}
+
+		[Fact]
 		public async Task CreateDiscountAsync_ShouldCreateDiscount()
 		{
 			// arrange
@@ -83,7 +106,6 @@ namespace Discount.IntegrationTests.Tests
 			_mapperMock.Setup(s => s.Map<CouponResponse>(coupon)).Returns(couponResponse);
 			_discountRepositoryMock.Setup(s => s.CreateDiscountAsync(coupon)).ReturnsAsync(true);
 			_discountRepositoryMock.Setup(s => s.GetDiscountAsync(command.ProductName)).ReturnsAsync(coupon);
-			_npgsqlOptionsMock.Setup(s => s.Value).Returns(_options);
 
 			Configure(_configureMockServices);
 
@@ -117,7 +139,6 @@ namespace Discount.IntegrationTests.Tests
 			_mapperMock.Setup(s => s.Map<CouponResponse>(coupon)).Returns(couponResponse);
 			_discountRepositoryMock.Setup(s => s.UpdateDiscountAsync(coupon)).ReturnsAsync(true);
 			_discountRepositoryMock.Setup(s => s.GetDiscountAsync(command.ProductName)).ReturnsAsync(coupon);
-			_npgsqlOptionsMock.Setup(s => s.Value).Returns(_options);
 
 			Configure(_configureMockServices);
 
@@ -145,7 +166,6 @@ namespace Discount.IntegrationTests.Tests
 
 			_discountRepositoryMock.Setup(s => s.DeleteDiscountAsync(command.ProductName)).ReturnsAsync(true);
 			_discountRepositoryMock.Setup(s => s.GetDiscountAsync(command.ProductName)).ThrowsAsync(It.IsAny<RpcException>());
-			_npgsqlOptionsMock.Setup(s => s.Value).Returns(_options);
 
 			Configure(_configureMockServices);
 
