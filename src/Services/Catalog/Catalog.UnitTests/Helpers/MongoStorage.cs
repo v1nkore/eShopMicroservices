@@ -1,6 +1,6 @@
 ﻿using Catalog.API.DTO;
 using Catalog.API.Entities;
-using Shared.Utilities.Guid;
+using Catalog.API.Guid;
 
 namespace Catalog.UnitTests.Helpers
 {

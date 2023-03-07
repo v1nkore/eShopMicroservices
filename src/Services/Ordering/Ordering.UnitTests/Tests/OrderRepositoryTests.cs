@@ -20,7 +20,6 @@ namespace Ordering.UnitTests.Tests
 			_orderRepository = new OrderRepository(_orderContext);
 		}
 
-
 		[Fact]
 		public async Task GetAsync_ShouldReturnOrders()
 		{

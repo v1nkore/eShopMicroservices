@@ -1,4 +1,4 @@
-﻿namespace Shared.Configs.Configs
+﻿namespace Basket.API.Configs
 {
 	public static class DiscountGrpcConfig
 	{

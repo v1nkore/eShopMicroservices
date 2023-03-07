@@ -1,18 +1,16 @@
-using System.Net;
 using Discount.GRPC.Extensions;
 using Discount.GRPC.Options;
 using Discount.GRPC.Repositories;
 using Discount.GRPC.Repositories.Interfaces;
 using Discount.GRPC.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddGrpc();
 
 builder.Services.AddAutoMapper(typeof(Discount.GRPC.Program));
-
-builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString($"{NpgsqlOptions.Section}:ConnectionString"));
 
 builder.Services.Configure<NpgsqlOptions>(builder.Configuration.GetSection(NpgsqlOptions.Section));
 builder.Services.AddSingleton<INpgsqlOptions, NpgsqlOptions>();

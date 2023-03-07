@@ -1,9 +1,8 @@
+using Basket.API.Configs;
 using Basket.API.GrpcServices;
 using Basket.API.Repositories;
 using Basket.API.Repositories.Interfaces;
 using MassTransit;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Shared.Configs.Configs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,9 +20,6 @@ builder.Services.AddScoped<DiscountGrpcService>();
 builder.Services.AddGrpcClient<DiscountProto.DiscountProtoClient>(options => { options.Address = new Uri(DiscountGrpcConfig.DiscountUrl); });
 
 builder.Services.AddMassTransit();
-
-builder.Services.AddHealthChecks()
-	.AddRedis(CacheConfig.ConnectionString, "Redis Health", HealthStatus.Degraded);
 
 var app = builder.Build();
 

@@ -62,7 +62,6 @@ namespace Basket.UnitTests.Tests
 			Assert.Null(deletedBasket);
 		}
 
-
 		[Fact]
 		public async Task GetBasketAsync_ShouldReturnNull_WhenBasketIsNotCached()
 		{

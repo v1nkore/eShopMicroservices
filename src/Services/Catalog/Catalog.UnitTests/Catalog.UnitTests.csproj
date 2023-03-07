@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\Shared.Utils\Shared.Utilities.csproj" />
     <ProjectReference Include="..\Catalog.API\Catalog.API.csproj" />
   </ItemGroup>
 

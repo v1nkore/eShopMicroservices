@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,11 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="6.0.4" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
-    <PackageReference Include="MassTransit" Version="8.0.13" />
+	<PackageReference Include="MassTransit" Version="8.0.13" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+	<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.14" />
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +20,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus.Messages\EventBus.Messages.csproj" />
     <ProjectReference Include="..\..\Discount\Discount.GRPC\Discount.GRPC.csproj" />
-    <ProjectReference Include="..\..\Shared\Shared.Configs\Shared.Configs.csproj" />
   </ItemGroup>
 
 </Project>

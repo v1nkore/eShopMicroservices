@@ -2,10 +2,10 @@
 using Catalog.API.Data.Interfaces;
 using Catalog.API.DTO;
 using Catalog.API.Entities;
+using Catalog.API.Guid;
 using Catalog.API.Repositories.Interfaces;
+using Catalog.API.ServiceResponses;
 using MongoDB.Driver;
-using Shared.Responses.ServiceResponses;
-using Shared.Utilities.Guid;
 
 namespace Catalog.API.Repositories
 {

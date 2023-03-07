@@ -1,4 +1,4 @@
-﻿namespace Shared.Responses.ServiceResponses
+﻿namespace Catalog.API.ServiceResponses
 {
 	public enum ServiceResponseStatus
 	{

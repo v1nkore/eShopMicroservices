@@ -1,7 +1,7 @@
 ﻿using Catalog.API.DTO;
 using Catalog.API.Repositories.Interfaces;
+using Catalog.API.ServiceResponses;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Responses.ServiceResponses;
 
 namespace Catalog.API.Controllers
 {

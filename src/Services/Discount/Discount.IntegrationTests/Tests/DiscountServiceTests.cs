@@ -16,10 +16,8 @@ namespace Discount.IntegrationTests.Tests
 {
 	public class DiscountServiceTests : IDisposable
 	{
-		private readonly NpgsqlOptions _options;
 		private readonly Mock<IMapper> _mapperMock;
 		private readonly Mock<IDiscountRepository> _discountRepositoryMock;
-		private readonly Mock<IOptions<NpgsqlOptions>> _npgsqlOptionsMock;
 		private readonly Action<IServiceCollection> _configureMockServices;
 
 		private DiscountWebApplicationFactory<Program> _factory = null!;
@@ -27,23 +25,23 @@ namespace Discount.IntegrationTests.Tests
 
 		public DiscountServiceTests()
 		{
-			_options = new NpgsqlOptions()
+			var options = new NpgsqlOptions()
 			{
 				ConnectionString = "Server=localhost;Port=5432;Database=TestDiscountDb;User Id=postgres;Password=PostgresPassword;"
 			};
 			_mapperMock = new Mock<IMapper>();
 			_discountRepositoryMock = new Mock<IDiscountRepository>();
-			_npgsqlOptionsMock = new Mock<IOptions<NpgsqlOptions>>();
+			Mock<IOptions<NpgsqlOptions>> npgsqlOptionsMock = new();
 			_configureMockServices = services =>
 			{
 				services.AddSingleton<IMapper>(_mapperMock.Object);
 				services.AddSingleton<IDiscountRepository>(_discountRepositoryMock.Object);
-				services.AddSingleton<IOptions<NpgsqlOptions>>(_npgsqlOptionsMock.Object);
+				services.AddSingleton<IOptions<NpgsqlOptions>>(npgsqlOptionsMock.Object);
 			};
-			_npgsqlOptionsMock.Setup(s => s.Value).Returns(_options);
+			npgsqlOptionsMock.Setup(s => s.Value).Returns(options);
 		}
 
-		public GrpcChannel GrpcChannel { get; set; } = null!;
+		private GrpcChannel GrpcChannel { get; set; } = null!;
 
 		[Fact]
 		public async Task GetDiscountAsync_ShouldReturnDiscount()

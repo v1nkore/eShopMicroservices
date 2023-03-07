@@ -3,12 +3,12 @@ using Catalog.API.Data.Interfaces;
 using Catalog.API.DTO;
 using Catalog.API.Entities;
 using Catalog.API.Repositories;
+using Catalog.API.ServiceResponses;
 using Catalog.UnitTests.FakeResults;
 using Catalog.UnitTests.Helpers;
 using MongoDB.Driver;
 using Moq;
-using Shared.Responses.ServiceResponses;
-using GuidConverter = Shared.Utilities.Guid.GuidConverter;
+using GuidConverter = Catalog.API.Guid.GuidConverter;
 
 namespace Catalog.UnitTests.Tests
 {
