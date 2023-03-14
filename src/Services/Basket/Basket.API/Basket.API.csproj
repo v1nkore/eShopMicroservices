@@ -4,12 +4,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>af9b5f80-264b-4fb0-b4ca-0811f1404681</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="MassTransit" Version="8.0.13" />
+	<PackageReference Include="MassTransit" Version="7.3.1" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
-	<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.3" />
+	<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.14" />
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
@@ -18,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus.Messages\EventBus.Messages.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\MassTransit.Contracts\MassTransit.Contracts.csproj" />
     <ProjectReference Include="..\..\Discount\Discount.GRPC\Discount.GRPC.csproj" />
   </ItemGroup>
 

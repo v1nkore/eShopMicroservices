@@ -6,9 +6,9 @@ using Ordering.Domain.Entities;
 
 namespace Ordering.Application.Profiles
 {
-	public class MappingProfile : Profile
+	public class OrderProfile : Profile
 	{
-		public MappingProfile()
+		public OrderProfile()
 		{
 			CreateMap<CheckoutOrderCommand, Order>();
 			CreateMap<UpdateOrderCommand, Order>();

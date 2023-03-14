@@ -1,5 +1,5 @@
-using EventBus.Messages.Common;
 using MassTransit;
+using MassTransit.Contracts.Common;
 using Ordering.API.EventBusConsumers;
 using Ordering.API.Extensions;
 using Ordering.Application.Contracts.Infrastructure;

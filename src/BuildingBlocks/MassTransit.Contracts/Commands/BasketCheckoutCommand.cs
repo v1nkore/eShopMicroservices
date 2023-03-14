@@ -1,6 +1,6 @@
-﻿namespace EventBus.Messages.Events
+﻿namespace MassTransit.Contracts.Commands
 {
-	public class BasketCheckoutEvent : IntegrationEventBase
+	public class BasketCheckoutCommand : IntegrationCommandBase
 	{
 		public string UserName { get; set; } = null!;
 		public decimal TotalPrice { get; set; }

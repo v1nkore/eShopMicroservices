@@ -1,4 +1,4 @@
-﻿namespace EventBus.Messages.Common
+﻿namespace MassTransit.Contracts.Common
 {
 	public static class EventBusConstants
 	{

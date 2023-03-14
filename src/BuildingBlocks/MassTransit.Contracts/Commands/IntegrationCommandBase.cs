@@ -1,14 +1,14 @@
-﻿namespace EventBus.Messages.Events
+﻿namespace MassTransit.Contracts.Commands
 {
-	public class IntegrationEventBase
+	public class IntegrationCommandBase
 	{
-		public IntegrationEventBase()
+		public IntegrationCommandBase()
 		{
 			Id = Guid.NewGuid();
 			CreatedAt = DateTime.UtcNow;
 		}
 
-		public IntegrationEventBase(Guid id, DateTime createdAt)
+		public IntegrationCommandBase(Guid id, DateTime createdAt)
 		{
 			Id = id;
 			CreatedAt = createdAt;

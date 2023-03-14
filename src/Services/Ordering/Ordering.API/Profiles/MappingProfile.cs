@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EventBus.Messages.Events;
+using MassTransit.Contracts.Commands;
 using Ordering.Application.Features.Orders.Commands.CheckoutOrder;
 
 namespace Ordering.API.Profiles
@@ -8,7 +8,7 @@ namespace Ordering.API.Profiles
 	{
 		public MappingProfile()
 		{
-			CreateMap<CheckoutOrderCommand, BasketCheckoutEvent>();
+			CreateMap<CheckoutOrderCommand, BasketCheckoutCommand>();
 		}
 	}
 }

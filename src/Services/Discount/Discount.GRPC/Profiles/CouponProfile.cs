@@ -3,9 +3,9 @@ using Discount.GRPC.Entities;
 
 namespace Discount.GRPC.Profiles;
 
-public class MappingProfile : Profile
+public class CouponProfile : Profile
 {
-	public MappingProfile()
+	public CouponProfile()
 	{
 		CreateMap<Coupon, CouponResponse>();
 		CreateMap<CreateDiscountCommand, Coupon>();
